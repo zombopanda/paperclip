@@ -1835,6 +1835,8 @@ export function heartbeatService(db: Db) {
           model: heartbeatModel,
           maxTurnsPerRun: TRIAGE_MAX_TURNS,
           promptTemplate: TRIAGE_SYSTEM_PROMPT,
+          bootstrapPrompt: "",
+          instructionsFilePath: undefined,
         };
 
         let triageStdout = "";
@@ -1845,7 +1847,7 @@ export function heartbeatService(db: Db) {
 
         try {
           const triageResult = await adapter.execute({
-            runId: run.id,
+            runId: `${run.id}_triage`,
             agent,
             runtime: { ...runtimeForAdapter, sessionId: null, sessionParams: null, sessionDisplayId: null },
             config: triageConfig,
